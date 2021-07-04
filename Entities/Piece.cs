@@ -2,7 +2,7 @@ using Chess.Entities.Enums;
 
 namespace Chess.Entities
 {
-    public class Piece
+    public abstract class Piece
     {
         public Board Board { get; protected set; }
         public Color Color { get; protected set; }
@@ -18,6 +18,8 @@ namespace Chess.Entities
             Position = null;
             MovesCount = 0;
         }
+
+        public abstract bool[,] PossibleMoves();
 
         public void MovePiece()
         {

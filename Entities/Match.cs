@@ -8,12 +8,14 @@ namespace Chess.Entities
         public Board Board { get; private set; }
         private int Round;
         private Color CurrentPlayer;
+        public bool IsOver { get; set; }
 
         public Match()
         {
             Board = new Board(8, 8);
             Round = 1;
             CurrentPlayer = Color.White;
+            IsOver = false;
 
             DistributePieces();
         }

@@ -12,13 +12,27 @@ namespace Chess
         {
             try
             {
-                Console.Clear();
 
                 Match match = new Match();
 
-                Screen.PrintBoard(match.Board);
+                while (!match.IsOver)
+                {
+                    Console.Clear();
 
-                Console.WriteLine();
+                    Screen.PrintBoard(match.Board);
+
+                    Console.WriteLine();
+
+                    Console.Write("From: ");
+                    Position from = Screen.ReadNotationPosition().ToPosition();
+
+                    Console.Write("To: ");
+                    Position to = Screen.ReadNotationPosition().ToPosition();
+
+                    match.Move(from, to);
+
+                }
+
             }
             catch (BoardException e)
             {
