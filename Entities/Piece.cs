@@ -18,5 +18,10 @@ namespace Chess.Entities
             Position = null;
             MovesCount = 0;
         }
+
+        public void MovePiece()
+        {
+            MovesCount++;
+        }
     }
 }

@@ -33,6 +33,21 @@ namespace Chess.Entities
             piece.Position = position;
         }
 
+        public Piece RemovePiece(Position position)
+        {
+            if (Piece(position) == null)
+            {
+                return null;
+            }
+
+            Piece aux = Piece(position);
+
+            aux.Position = null;
+            Pieces[position.Row, position.Column] = null;
+
+            return aux;
+        }
+
         public bool IsPositionValid(Position position)
         {
             return position.Row >= 0 && position.Row < Rows && position.Column >= 0 && position.Column < Columns;
