@@ -2,6 +2,7 @@
 using Chess.Entities;
 using Chess.Entities.Enums;
 using Chess.Entities.Pieces;
+using Chess.Entities.Exceptions;
 
 namespace Chess
 {
@@ -9,17 +10,29 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            Console.Clear();
+            try
+            {
 
-            Board board = new Board(8, 8);
+                Console.Clear();
 
-            board.PlacePiece(new Rook(board, Color.Black), new Position(0, 0));
-            board.PlacePiece(new Rook(board, Color.Black), new Position(1, 3));
-            board.PlacePiece(new King(board, Color.Black), new Position(2, 4));
+                Board board = new Board(8, 8);
 
-            Screen.PrintBoard(board);
+                board.PlacePiece(new Rook(board, Color.Black), new Position(0, 0));
+                board.PlacePiece(new Rook(board, Color.Black), new Position(1, 3));
+                board.PlacePiece(new King(board, Color.Black), new Position(2, 7));
 
-            Console.WriteLine();
+                Screen.PrintBoard(board);
+
+                Console.WriteLine();
+            }
+            catch (BoardException e)
+            {
+                Console.WriteLine("Board error: " + e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unexpected error: " + e.Message);
+            }
         }
     }
 }

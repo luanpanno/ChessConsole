@@ -1,3 +1,5 @@
+using Chess.Entities.Exceptions;
+
 namespace Chess.Entities
 {
     public class Board
@@ -15,15 +17,40 @@ namespace Chess.Entities
             Pieces = new Piece[Rows, Columns];
         }
 
-        public Piece Piece(int row, int column)
+        public Piece Piece(Position position)
         {
-            return Pieces[row, column];
+            return Pieces[position.Row, position.Column];
         }
 
         public void PlacePiece(Piece piece, Position position)
         {
+            if (PieceExists(position))
+            {
+                throw new BoardException("This position already has a piece");
+            }
+
             Pieces[position.Row, position.Column] = piece;
             piece.Position = position;
+        }
+
+        public bool IsPositionValid(Position position)
+        {
+            return position.Row >= 0 && position.Row < Rows && position.Column >= 0 && position.Column < Columns;
+        }
+
+        public void ValidatePosition(Position position)
+        {
+            if (!IsPositionValid(position))
+            {
+                throw new BoardException("Invalid position");
+            }
+        }
+
+        public bool PieceExists(Position position)
+        {
+            ValidatePosition(position);
+
+            return Piece(position) != null;
         }
     }
 }
