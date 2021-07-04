@@ -12,8 +12,10 @@ namespace Chess
         {
             try
             {
-
                 Console.Clear();
+                Notation pos = new Notation('c', 7);
+
+                Console.WriteLine(pos.ToPosition());
 
                 Board board = new Board(8, 8);
 
