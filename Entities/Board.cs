@@ -14,5 +14,10 @@ namespace Chess.Entities
             Columns = columns;
             Pieces = new Piece[Rows, Columns];
         }
+
+        public Piece Piece(int row, int column)
+        {
+            return Pieces[row, column];
+        }
     }
 }
