@@ -13,15 +13,13 @@ namespace Chess
             try
             {
                 Console.Clear();
-                Notation pos = new Notation('c', 7);
-
-                Console.WriteLine(pos.ToPosition());
 
                 Board board = new Board(8, 8);
 
                 board.PlacePiece(new Rook(board, Color.Black), new Position(0, 0));
                 board.PlacePiece(new Rook(board, Color.Black), new Position(1, 3));
                 board.PlacePiece(new King(board, Color.Black), new Position(2, 7));
+                board.PlacePiece(new King(board, Color.White), new Position(3, 7));
 
                 Screen.PrintBoard(board);
 
