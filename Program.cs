@@ -14,9 +14,9 @@ namespace Chess
             {
                 Console.Clear();
 
-                Board board = new Board(8, 8);
+                Match match = new Match();
 
-                Screen.PrintBoard(board);
+                Screen.PrintBoard(match.Board);
 
                 Console.WriteLine();
             }

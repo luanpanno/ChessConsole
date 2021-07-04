@@ -5,7 +5,7 @@ namespace Chess.Entities
 {
     public class Match
     {
-        private Board Board;
+        public Board Board { get; private set; }
         private int Round;
         private Color CurrentPlayer;
 
@@ -31,7 +31,19 @@ namespace Chess.Entities
 
         private void DistributePieces()
         {
-            Board.PlacePiece(new Rook(Board, Color.Black), new Notation('c', 1).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.White), new Notation('c', 1).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.White), new Notation('c', 2).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.White), new Notation('d', 2).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.White), new Notation('e', 2).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.White), new Notation('e', 1).ToPosition());
+            Board.PlacePiece(new King(Board, Color.White), new Notation('d', 1).ToPosition());
+
+            Board.PlacePiece(new Rook(Board, Color.Black), new Notation('c', 7).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.Black), new Notation('c', 8).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.Black), new Notation('d', 7).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.Black), new Notation('e', 7).ToPosition());
+            Board.PlacePiece(new Rook(Board, Color.Black), new Notation('e', 8).ToPosition());
+            Board.PlacePiece(new King(Board, Color.Black), new Notation('d', 8).ToPosition());
         }
     }
 }
