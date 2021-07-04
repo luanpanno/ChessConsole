@@ -1,3 +1,4 @@
+using System;
 using Chess.Entities.Enums;
 
 namespace Chess.Entities
@@ -24,6 +25,20 @@ namespace Chess.Entities
         public void MovePiece()
         {
             MovesCount++;
+        }
+
+        public virtual bool CanMove(Position position)
+        {
+            Piece piece = Board.Piece(position);
+            Console.WriteLine(piece);
+
+            return piece == null || piece.Color != Color;
+            // return true;
+        }
+
+        public virtual void FillPosition(bool[,] moves, Position position)
+        {
+            moves[position.Row, position.Column] = Board.IsPositionValid(position) && CanMove(position);
         }
     }
 }

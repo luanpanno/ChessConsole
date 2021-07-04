@@ -19,13 +19,21 @@ namespace Chess
                 {
                     Console.Clear();
 
-                    Screen.PrintBoard(match.Board);
+                    Screen.PrintBoard(match.Board, null);
 
                     Console.WriteLine();
 
                     Console.Write("From: ");
                     Position from = Screen.ReadNotationPosition().ToPosition();
 
+                    bool[,] possibleMoves = match.Board.Piece(from).PossibleMoves();
+
+                    Console.Clear();
+
+                    Screen.PrintBoard(match.Board, possibleMoves);
+
+                    Console.WriteLine();
+                    Console.WriteLine("From: " + from);
                     Console.Write("To: ");
                     Position to = Screen.ReadNotationPosition().ToPosition();
 
@@ -40,6 +48,7 @@ namespace Chess
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 Console.WriteLine("Unexpected error: " + e.Message);
             }
         }
