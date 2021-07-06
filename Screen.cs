@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Chess.Entities;
 using Chess.Entities.Enums;
 
@@ -6,6 +7,50 @@ namespace Chess
 {
     public class Screen
     {
+        public static void PrintMatch(Match match)
+        {
+            Console.Clear();
+
+            Screen.PrintBoard(match.Board, null);
+
+            Console.WriteLine();
+
+            PrintCapturedPieces(match);
+
+            Console.WriteLine("Round: " + match.Round);
+            Console.WriteLine("Current player: " + match.CurrentPlayer);
+        }
+
+        public static void PrintCapturedPieces(Match match)
+        {
+            Console.WriteLine("Captured pieces:");
+            Console.Write("Whites: ");
+            PrintPiecesSet(match.GetCapturedPiecesByColor(Color.White));
+
+            ConsoleColor aux = Console.ForegroundColor;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.Write("Blacks: ");
+            PrintPiecesSet(match.GetCapturedPiecesByColor(Color.Black));
+
+            Console.ForegroundColor = aux;
+
+            Console.WriteLine();
+        }
+
+        public static void PrintPiecesSet(HashSet<Piece> piecesSet)
+        {
+            Console.Write("[");
+
+            foreach (Piece piece in piecesSet)
+            {
+                Console.Write(piece + " ");
+            }
+
+            Console.WriteLine("]");
+        }
+
         public static void PrintBoard(Board board, bool[,] possibleMoves)
         {
             ConsoleColor originalBg = Console.BackgroundColor;

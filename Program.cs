@@ -19,12 +19,7 @@ namespace Chess
 
                     Console.Clear();
 
-                    Screen.PrintBoard(match.Board, null);
-
-                    Console.WriteLine();
-
-                    Console.WriteLine("Round: " + match.Round);
-                    Console.WriteLine("Current player: " + match.CurrentPlayer);
+                    Screen.PrintMatch(match);
 
                     Console.WriteLine();
 
