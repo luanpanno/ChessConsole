@@ -20,8 +20,6 @@ namespace Chess.Entities
             MovesCount = 0;
         }
 
-        public abstract bool[,] PossibleMoves();
-
         public void MovePiece()
         {
             MovesCount++;
@@ -30,15 +28,38 @@ namespace Chess.Entities
         public virtual bool CanMove(Position position)
         {
             Piece piece = Board.Piece(position);
-            Console.WriteLine(piece);
 
             return piece == null || piece.Color != Color;
-            // return true;
         }
 
         public virtual void FillPosition(bool[,] moves, Position position)
         {
             moves[position.Row, position.Column] = Board.IsPositionValid(position) && CanMove(position);
         }
+
+        public bool CheckPossibleMoves()
+        {
+            bool[,] moves = PossibleMoves();
+
+            for (int i = 0; i < Board.Rows; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (moves[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool CanMoveTo(Position position)
+        {
+            return PossibleMoves()[position.Row, position.Column];
+        }
+
+        public abstract bool[,] PossibleMoves();
     }
 }

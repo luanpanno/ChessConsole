@@ -10,21 +10,27 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            try
+            Match match = new Match();
+
+            while (!match.IsOver)
             {
-
-                Match match = new Match();
-
-                while (!match.IsOver)
+                try
                 {
+
                     Console.Clear();
 
                     Screen.PrintBoard(match.Board, null);
 
                     Console.WriteLine();
 
+                    Console.WriteLine("Round: " + match.Round);
+                    Console.WriteLine("Current player: " + match.CurrentPlayer);
+
+                    Console.WriteLine();
+
                     Console.Write("From: ");
                     Position from = Screen.ReadNotationPosition().ToPosition();
+                    match.ValidateInitialPosition(from);
 
                     bool[,] possibleMoves = match.Board.Piece(from).PossibleMoves();
 
@@ -33,24 +39,23 @@ namespace Chess
                     Screen.PrintBoard(match.Board, possibleMoves);
 
                     Console.WriteLine();
-                    Console.WriteLine("From: " + from);
                     Console.Write("To: ");
                     Position to = Screen.ReadNotationPosition().ToPosition();
+                    match.ValidateMovePosition(from, to);
 
-                    match.Move(from, to);
-
+                    match.TurnRound(from, to);
                 }
-
-            }
-            catch (BoardException e)
-            {
-                Console.WriteLine("Board error: " + e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.WriteLine("Unexpected error: " + e.Message);
+                catch (BoardException e)
+                {
+                    Console.WriteLine("Board error: " + e.Message);
+                    Console.ReadLine();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unexpected error: " + e.Message);
+                }
             }
         }
     }
 }
+

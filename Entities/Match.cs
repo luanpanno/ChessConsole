@@ -1,13 +1,14 @@
 using Chess.Entities.Enums;
 using Chess.Entities.Pieces;
+using Chess.Entities.Exceptions;
 
 namespace Chess.Entities
 {
     public class Match
     {
         public Board Board { get; private set; }
-        private int Round;
-        private Color CurrentPlayer;
+        public int Round { get; private set; }
+        public Color CurrentPlayer { get; private set; }
         public bool IsOver { get; set; }
 
         public Match()
@@ -29,6 +30,54 @@ namespace Chess.Entities
             Piece capturedPiece = Board.RemovePiece(to);
 
             Board.PlacePiece(piece, to);
+        }
+
+        public void TurnRound(Position from, Position to)
+        {
+            Move(from, to);
+            Round++;
+            ChangeCurrentPlayer();
+        }
+
+        public void ValidateInitialPosition(Position position)
+        {
+            Piece piece = Board.Piece(position);
+
+            if (piece == null)
+            {
+                throw new BoardException("There's no piece at this position.");
+            }
+
+            if (CurrentPlayer != piece.Color)
+            {
+                throw new BoardException("The choosed piece at this position isn't yours.");
+            }
+
+            if (!piece.CheckPossibleMoves())
+            {
+                throw new BoardException("There's no possible moves at this position.");
+            }
+        }
+
+        public void ValidateMovePosition(Position from, Position to)
+        {
+            if (!Board.Piece(from).CanMoveTo(to))
+            {
+                throw new BoardException("Invalid destination position.");
+
+            }
+        }
+
+        public void ChangeCurrentPlayer()
+        {
+            if (CurrentPlayer == Color.White)
+            {
+                CurrentPlayer = Color.Black;
+            }
+            else
+            {
+                CurrentPlayer = Color.White;
+            }
         }
 
         private void DistributePieces()
