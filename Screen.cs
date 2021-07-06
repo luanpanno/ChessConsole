@@ -13,17 +13,24 @@ namespace Chess
 
             Screen.PrintBoard(match.Board, null);
 
+            if (match.Check)
+            {
+                Console.WriteLine();
+                Console.WriteLine("CHECK!");
+            }
+
+
             Console.WriteLine();
 
             PrintCapturedPieces(match);
 
             Console.WriteLine("Round: " + match.Round);
             Console.WriteLine("Current player: " + match.CurrentPlayer);
+
         }
 
         public static void PrintCapturedPieces(Match match)
         {
-            Console.WriteLine("Captured pieces:");
             Console.Write("Whites: ");
             PrintPiecesSet(match.GetCapturedPiecesByColor(Color.White));
 

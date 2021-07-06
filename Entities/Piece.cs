@@ -25,6 +25,11 @@ namespace Chess.Entities
             MovesCount++;
         }
 
+        public void MovePieceBack()
+        {
+            MovesCount--;
+        }
+
         public virtual bool CanMove(Position position)
         {
             Piece piece = Board.Piece(position);
