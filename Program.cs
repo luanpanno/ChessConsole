@@ -49,7 +49,12 @@ namespace Chess
                 {
                     Console.WriteLine("Unexpected error: " + e.Message);
                 }
+
             }
+
+            Console.Clear();
+
+            Screen.PrintMatch(match);
         }
     }
 }

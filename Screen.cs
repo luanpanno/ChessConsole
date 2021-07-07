@@ -13,19 +13,30 @@ namespace Chess
 
             Screen.PrintBoard(match.Board, null);
 
-            if (match.Check)
+
+            if (!match.IsOver)
+            {
+                if (match.Check)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("CHECK!");
+                }
+
+
+                Console.WriteLine();
+
+                PrintCapturedPieces(match);
+
+                Console.WriteLine("Round: " + match.Round);
+                Console.WriteLine("Current player: " + match.CurrentPlayer);
+            }
+            else
             {
                 Console.WriteLine();
-                Console.WriteLine("CHECK!");
+                Console.WriteLine("CHECKMATE!");
+                Console.WriteLine("Winner: " + match.CurrentPlayer);
+
             }
-
-
-            Console.WriteLine();
-
-            PrintCapturedPieces(match);
-
-            Console.WriteLine("Round: " + match.Round);
-            Console.WriteLine("Current player: " + match.CurrentPlayer);
 
         }
 

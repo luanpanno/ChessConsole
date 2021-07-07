@@ -73,8 +73,17 @@ namespace Chess.Entities
             }
 
             Check = IsKingInCheck(Opponent(CurrentPlayer));
-            Round++;
-            ChangeCurrentPlayer();
+
+            if (CheckMate(Opponent(CurrentPlayer)))
+            {
+                IsOver = true;
+            }
+            else
+            {
+                Round++;
+                ChangeCurrentPlayer();
+            }
+
         }
 
         public void ValidateInitialPosition(Position position)
@@ -190,6 +199,44 @@ namespace Chess.Entities
             return false;
         }
 
+        public bool CheckMate(Color color)
+        {
+            bool isInCheck = IsKingInCheck(color);
+
+            if (!isInCheck)
+            {
+                return false;
+            }
+
+            foreach (Piece piece in GetPiecesInGame(color))
+            {
+                bool[,] moves = piece.PossibleMoves();
+
+                for (int row = 0; row < Board.Rows; row++)
+                {
+                    for (int column = 0; column < Board.Columns; column++)
+                    {
+                        if (moves[row, column])
+                        {
+                            Position from = piece.Position;
+                            Position destination = new Position(row, column);
+                            Piece capturedPiece = Move(from, destination);
+                            isInCheck = IsKingInCheck(color);
+
+                            UndoMove(from, destination, capturedPiece);
+
+                            if (!isInCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public void PlaceNewPiece(char column, int row, Piece piece)
         {
             Board.PlacePiece(piece, new Notation(column, row).ToPosition());
@@ -200,18 +247,12 @@ namespace Chess.Entities
         private void DistributePieces()
         {
             PlaceNewPiece('c', 1, new Rook(Board, Color.White));
-            PlaceNewPiece('c', 2, new Rook(Board, Color.White));
-            PlaceNewPiece('d', 2, new Rook(Board, Color.White));
-            PlaceNewPiece('e', 2, new Rook(Board, Color.White));
-            PlaceNewPiece('e', 1, new Rook(Board, Color.White));
-            PlaceNewPiece('d', 1, new King(Board, Color.White));
+            PlaceNewPiece('d', 1, new Rook(Board, Color.White));
+            PlaceNewPiece('h', 7, new Rook(Board, Color.White));
+            PlaceNewPiece('h', 6, new King(Board, Color.White));
 
-            PlaceNewPiece('c', 7, new Rook(Board, Color.Black));
-            PlaceNewPiece('c', 8, new Rook(Board, Color.Black));
-            PlaceNewPiece('d', 7, new Rook(Board, Color.Black));
-            PlaceNewPiece('e', 7, new Rook(Board, Color.Black));
-            PlaceNewPiece('e', 8, new Rook(Board, Color.Black));
-            PlaceNewPiece('d', 8, new King(Board, Color.Black));
+            PlaceNewPiece('a', 8, new King(Board, Color.Black));
+            PlaceNewPiece('b', 8, new Rook(Board, Color.Black));
         }
     }
 }
