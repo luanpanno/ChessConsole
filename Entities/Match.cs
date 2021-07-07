@@ -153,6 +153,17 @@ namespace Chess.Entities
                 throw new BoardException("You cannot put yourself in check");
             }
 
+            Piece piece = Board.Piece(to);
+
+            if (piece is Pawn && (piece.Color == Color.White && to.Row == 0) || (piece.Color == Color.Black && to.Row == 7))
+            {
+                piece = Board.RemovePiece(to);
+                Pieces.Remove(piece);
+                Piece queen = new Queen(Board, piece.Color);
+                Board.PlacePiece(queen, to);
+                Pieces.Add(queen);
+            }
+
             Check = IsKingInCheck(Opponent(CurrentPlayer));
 
             if (CheckMate(Opponent(CurrentPlayer)))
@@ -164,8 +175,6 @@ namespace Chess.Entities
                 Round++;
                 ChangeCurrentPlayer();
             }
-
-            Piece piece = Board.Piece(to);
 
             if (piece is Pawn && (to.Row == from.Row - 2 || to.Row == from.Row + 2))
             {
